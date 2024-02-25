@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "outDir": "dist",
+        "allowJs": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "resolveJsonModule": true,
+        "noImplicitReturns": true,
+        "esModuleInterop": true,
+        "target": "ESNext",
+        "module": "commonjs",
+        "baseUrl": "src",
+        "paths": {
+            "@code/*": ["introduction/*", "arrayString/*", "linkedlist/*"]
+        }
+    },
+    "include": ["./src/**/*"],
+    "exclude": ["node_modules"]
+}
