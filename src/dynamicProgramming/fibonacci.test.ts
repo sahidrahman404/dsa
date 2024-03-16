@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { fib } from "./fibonnaci";
+import { fib } from "./fibonacci";
 
 describe("fibonnaci", () => {
     test("fibonnaci 1", () => {
