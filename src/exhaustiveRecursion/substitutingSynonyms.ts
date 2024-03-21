@@ -1,43 +1,24 @@
 function substituteSynonyms(
     s: string,
-    synonym: Record<string, string[]>,
+    synonyms: Record<string, string[]>,
 ): string[] {
-    if (s.length === 0) return [""];
-    const result: string[] = [];
-    const { choices, reminder } = getChoices(s, synonym);
-    for (const choice of choices) {
-        const reminderPossibilities = substituteSynonyms(reminder, synonym);
-        for (const possibility of reminderPossibilities) {
-            result.push(
-                possibility === ""
-                    ? choice + possibility
-                    : choice + " " + possibility,
-            );
-        }
-    }
-    return result;
+    const strings = s.split(" ");
+    return generate(strings, synonyms).map((s) => s.join(" "));
 }
 
-type GetChoicesResult = {
-    choices: string[];
-    reminder: string;
-};
+function generate(s: string[], synonyms: Record<string, string[]>): string[][] {
+    if (s.length === 0) return [[]];
 
-function getChoices(
-    s: string,
-    synonym: Record<string, string[]>,
-): GetChoicesResult {
-    const strings = s.split(" ");
-    if (strings[0] in synonym) {
-        return {
-            choices: synonym[strings[0]],
-            reminder: strings.slice(1).join(" "),
-        };
+    const firstWord = s[0];
+    const subarrays = generate(s.slice(1), synonyms);
+    if (firstWord in synonyms) {
+        const result: string[][] = [];
+        for (const synonym of synonyms[firstWord]) {
+            result.push(...subarrays.map((subarray) => [synonym, ...subarray]));
+        }
+        return result;
     } else {
-        return {
-            choices: [strings[0]],
-            reminder: strings.slice(1).join(" "),
-        };
+        return subarrays.map((subarray) => [firstWord, ...subarray]);
     }
 }
 
